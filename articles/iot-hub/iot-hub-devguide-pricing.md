@@ -3,11 +3,12 @@ title: Understand Azure IoT Hub pricing | Microsoft Docs
 description: Developer guide - information about how metering and pricing works with IoT Hub including worked examples.
 author: robinsh
 manager: philmea
-ms.author: robin.shahan
+ms.author: robinsh
 ms.service: iot-hub
 services: iot-hub
 ms.topic: conceptual
 ms.date: 03/11/2019
+ms.custom: [amqp, mqtt]
 ---
 
 # Azure IoT Hub pricing information

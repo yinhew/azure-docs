@@ -1,9 +1,9 @@
 ---
-title: Stop using the managed identity VM extension and start using the Azure Instance Metadata Service endpoint
+title: Stop using managed identity VM extension - Azure AD
 description: Step by step instructions to stop using the VM extension and start using the Azure Instance Metadata Service (IMDS) for authentication.
 services: active-directory
 documentationcenter: 
-author: priyamohanram
+author: MarkusVi
 manager: daveba
 editor: 
 
@@ -14,7 +14,7 @@ ms.topic: conceptual
 ms.tgt_pltfrm: na
 ms.workload: identity
 ms.date: 02/25/2018
-ms.author: priyamo
+ms.author: markvi
 ---
 
 # How to stop using the virtual machine managed identities extension and start using the Azure Instance Metadata Service
@@ -31,7 +31,7 @@ Due to several limitations outlined in the next section, the managed identity VM
 
 ### Provision the extension 
 
-When you configure a virtual machine or virtual machine scale set to have a managed identity, you may optional choose to, you may optionally choose to provision the managed identities for Azure resources VM extension using the `-Type` parameter on the [Set-AzVMExtension](https://docs.microsoft.com/powershell/module/az.compute/set-azvmextension) cmdlet. You can pass either `ManagedIdentityExtensionForWindows` or `ManagedIdentityExtensionForLinux`, depending on the type of virtual machine, and name it using the `-Name` parameter. The `-Settings` parameter specifies the port used by the OAuth token endpoint for token acquisition:
+When you configure a virtual machine or virtual machine scale set to have a managed identity, you may optionally choose to provision the managed identities for Azure resources VM extension using the `-Type` parameter on the [Set-AzVMExtension](https://docs.microsoft.com/powershell/module/az.compute/set-azvmextension) cmdlet. You can pass either `ManagedIdentityExtensionForWindows` or `ManagedIdentityExtensionForLinux`, depending on the type of virtual machine, and name it using the `-Name` parameter. The `-Settings` parameter specifies the port used by the OAuth token endpoint for token acquisition:
 
 ```powershell
    $settings = @{ "port" = 50342 }
@@ -119,7 +119,7 @@ Metadata: true
 | ------- | ----------- |
 | `GET` | The HTTP verb, indicating you want to retrieve data from the endpoint. In this case, an OAuth access token. | 
 | `http://localhost:50342/oauth2/token` | The managed identities for Azure resources endpoint, where 50342 is the default port and is configurable. |
-| `resource` | A query string parameter, indicating the App ID URI of the target resource. It also appears in the `aud` (audience) claim of the issued token. This example requests a token to access Azure Resource Manager, which has an App ID URI of https://management.azure.com/. |
+| `resource` | A query string parameter, indicating the App ID URI of the target resource. It also appears in the `aud` (audience) claim of the issued token. This example requests a token to access Azure Resource Manager, which has an App ID URI of `https://management.azure.com/`. |
 | `Metadata` | An HTTP request header field, required by managed identities for Azure resources as a mitigation against Server Side Request Forgery (SSRF) attack. This value must be set to "true", in all lower case.|
 | `object_id` | (Optional) A query string parameter, indicating the object_id of the managed identity you would like the token for. Required, if your VM has multiple user-assigned managed identities.|
 | `client_id` | (Optional) A query string parameter, indicating the client_id of the managed identity you would like the token for. Required, if your VM has multiple user-assigned managed identities.|
@@ -168,7 +168,7 @@ Where:
 
 #### "Automation script" fails when attempting schema export for managed identities for Azure resources extension
 
-When managed identities for Azure resources is enabled on a virtual machine, the following error is shown when attempting to use the “Automation script” feature for the virtual machine, or its resource group:
+When managed identities for Azure resources is enabled on a virtual machine, the following error is shown when attempting to use the "Automation script" feature for the virtual machine, or its resource group:
 
 ![Managed identities for Azure resources automation script export error](./media/howto-migrate-vm-extension/automation-script-export-error.png)
 
@@ -192,7 +192,7 @@ There are several major limitations to using the virtual machine extension.
 
 ## Azure Instance Metadata Service
 
-The [Azure Instance Metadata Service (IMDS)](https://docs.microsoft.com/azure/virtual-machines/instance-metadata-service) is a REST endpoint that provides information about running virtual machine instances that can be used to manage and configure your virtual machines. The endpoint is available at a well-known non-routable IP address (`169.254.169.254`) that can be accessed only from within the virtual machine.
+The [Azure Instance Metadata Service (IMDS)](/azure/virtual-machines/windows/instance-metadata-service) is a REST endpoint that provides information about running virtual machine instances that can be used to manage and configure your virtual machines. The endpoint is available at a well-known non-routable IP address (`169.254.169.254`) that can be accessed only from within the virtual machine.
 
 There are several advantages to using Azure IMDS to request tokens. 
 

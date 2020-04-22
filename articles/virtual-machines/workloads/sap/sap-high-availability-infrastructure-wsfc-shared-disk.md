@@ -1,22 +1,22 @@
 ---
-title: Prepare the Azure infrastructure for SAP HA using a Windows failover cluster and shared disk for SAP ASCS/SCS | Microsoft Docs
+title: Azure infrastructure for SAP ASCS/SCS with WSFC&shared disk | Microsoft Docs
 description: Learn how to prepare the Azure infrastructure for SAP HA by using a Windows failover cluster and shared disk for an SAP ASCS/SCS instance.
 services: virtual-machines-windows,virtual-network,storage
 documentationcenter: saponazure
-author: goraco
-manager: jeconnoc
+author: rdeltcheva
+manager: juergent
 editor: ''
 tags: azure-resource-manager
 keywords: ''
 
 ms.assetid: ec976257-396b-42a0-8ea1-01c97f820fa6
 ms.service: virtual-machines-windows
-ms.devlang: NA
+
 ms.topic: article
 ms.tgt_pltfrm: vm-windows
 ms.workload: infrastructure-services
 ms.date: 05/05/2017
-ms.author: rclaus
+ms.author: radeltch
 ms.custom: H1Hack27Feb2017
 
 ---
@@ -30,10 +30,10 @@ ms.custom: H1Hack27Feb2017
 [2243692]:https://launchpad.support.sap.com/#/notes/2243692
 
 [sap-installation-guides]:http://service.sap.com/instguides
-[tuning-failover-cluster-network-thresholds]:https://blogs.msdn.microsoft.com/clustering/2012/11/21/tuning-failover-cluster-network-thresholds/
+[tuning-failover-cluster-network-thresholds]:https://techcommunity.microsoft.com/t5/Failover-Clustering/Tuning-Failover-Cluster-Network-Thresholds/ba-p/371834
 
-[azure-subscription-service-limits]:../../../azure-subscription-service-limits.md
-[azure-subscription-service-limits-subscription]:../../../azure-subscription-service-limits.md
+[azure-resource-manager/management/azure-subscription-service-limits]:../../../azure-resource-manager/management/azure-subscription-service-limits.md
+[azure-resource-manager/management/azure-subscription-service-limits-subscription]:../../../azure-resource-manager/management/azure-subscription-service-limits.md
 
 [dbms-guide]:../../virtual-machines-windows-sap-dbms-guide.md
 
@@ -152,7 +152,7 @@ ms.custom: H1Hack27Feb2017
 [sap-templates-3-tier-multisid-apps-marketplace-image]:https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fsap-3-tier-marketplace-image-multi-sid-apps%2Fazuredeploy.json
 [sap-templates-3-tier-multisid-apps-marketplace-image-md]:https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fsap-3-tier-marketplace-image-multi-sid-apps-md%2Fazuredeploy.json
 
-[virtual-machines-azure-resource-manager-architecture-benefits-arm]:../../../azure-resource-manager/resource-group-overview.md#the-benefits-of-using-resource-manager
+[virtual-machines-azure-resource-manager-architecture-benefits-arm]:../../../azure-resource-manager/management/overview.md#the-benefits-of-using-resource-manager
 
 [virtual-machines-manage-availability]:../../virtual-machines-windows-manage-availability.md
 
@@ -221,7 +221,7 @@ _**Figure 1:** Set SAP high-availability Azure Resource Manager parameters_
 >
 
 ## <a name="c87a8d3f-b1dc-4d2f-b23c-da4b72977489"></a> Deploy virtual machines with corporate network connectivity (cross-premises) to use in production
-For production SAP systems, deploy Azure virtual machines with [corporate network connectivity (cross-premises)][planning-guide-2.2] by using Azure VPN Gateway or Azure ExpressRoute.
+For production SAP systems, deploy Azure virtual machines with corporate network connectivity by using Azure VPN Gateway or Azure ExpressRoute.
 
 > [!NOTE]
 > You can use your Azure Virtual Network instance. The virtual network and subnet have already been created and prepared.
@@ -232,15 +232,15 @@ For production SAP systems, deploy Azure virtual machines with [corporate networ
 2. In the **SUBNETID** box, add the full string of your prepared Azure network subnet ID where you plan to deploy your Azure virtual machines.
 3. To get a list of all Azure network subnets, run this PowerShell command:
 
-   ```PowerShell
-   (Get-AzureRmVirtualNetwork -Name <azureVnetName>  -ResourceGroupName <ResourceGroupOfVNET>).Subnets
+   ```powershell
+   (Get-AzVirtualNetwork -Name <azureVnetName>  -ResourceGroupName <ResourceGroupOfVNET>).Subnets
    ```
 
    The **ID** field shows the value for the subnet ID.
 4. To get a list of all subnet ID values, run this PowerShell command:
 
-   ```PowerShell
-   (Get-AzureRmVirtualNetwork -Name <azureVnetName>  -ResourceGroupName <ResourceGroupOfVNET>).Subnets.Id
+   ```powershell
+   (Get-AzVirtualNetwork -Name <azureVnetName>  -ResourceGroupName <ResourceGroupOfVNET>).Subnets.Id
    ```
 
    The subnet ID looks like this:
@@ -371,7 +371,7 @@ To set the required DNS IP addresses, complete the following steps:
 
 1. In the Azure portal, in the **DNS servers** pane, make sure that your virtual network **DNS servers** option is set to **Custom DNS**.
 2. Select your settings based on the type of network you have. For more information, see the following resources:
-   * [Corporate network connectivity (cross-premises)][planning-guide-2.2]: Add the IP addresses of the on-premises DNS servers.  
+   * Add the IP addresses of the on-premises DNS servers.  
    You can extend on-premises DNS servers to the virtual machines that are running in Azure. In that scenario, you can add the IP addresses of the Azure virtual machines on which you run the DNS service.
    * For VM deployments which are isolated in Azure: Deploy an additional virtual machine in the same Virtual Network instance that serves as a DNS server. Add the IP addresses of the Azure virtual machines that you've set up to run the DNS service.
 
@@ -736,8 +736,9 @@ Configuring a cluster file share witness involves these tasks:
 
 After you successfully install the Windows failover cluster, you need to change some thresholds so they adapt failover detection to conditions in Azure. The parameters to be changed are documented in [Tuning failover cluster network thresholds][tuning-failover-cluster-network-thresholds]. Assuming that your two VMs that make up the Windows cluster configuration for ASCS/SCS are in the same subnet, change the following parameters to these values:
 
-- SameSubNetDelay = 2
+- SameSubNetDelay = 2000
 - SameSubNetThreshold = 15
+- RoutingHistoryLength = 30
 
 These settings were tested with customers, and offer a good compromise. They are resilient enough, but they also provide failover that is fast enough in real error conditions on an SAP software or in a node or VM failure.
 

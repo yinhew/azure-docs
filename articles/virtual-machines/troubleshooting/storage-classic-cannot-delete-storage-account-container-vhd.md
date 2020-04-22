@@ -26,6 +26,10 @@ A "Disk" resource is used to mount a *.vhd page blob file to a virtual machine, 
 
 
 ## Steps while deleting a classic virtual machine 
+
+[!INCLUDE [classic-vm-deprecation](../../../includes/classic-vm-deprecation.md)]
+
+
 1. Delete the classic virtual machine.
 2. If the “Disks” checkbox is selected, the **disk lease** (shown in image above) associated with the page blob *.vhd is broken. The actual page blob *.vhd file will still exist in the storage account.
 ![Screenshot of the portal, with the virtual machine (classic) "Delete" error pane open](./media/storage-classic-cannot-delete-storage-account-container-vhd/steps_while_deleting_classic_vm.jpg) 
@@ -33,7 +37,7 @@ A "Disk" resource is used to mount a *.vhd page blob file to a virtual machine, 
 3. Once the disk(s) lease is broken, the page blob(s) itself can be deleted. A storage account or container can be deleted once all "Disk" resource present in them are deleted.
 
 >[!NOTE] 
->If user deletes the VM but not the VHD, storage charges will continue to accrue on the page blob *.vhd  file. The charges will be in line with the type of storage account, check the [pricing page](https://azure.microsoft.com/en-us/pricing/details/storage/) for more details. If user no longer intends to use the VHD(s), delete it/them to avoid future charges. 
+>If user deletes the VM but not the VHD, storage charges will continue to accrue on the page blob *.vhd  file. The charges will be in line with the type of storage account, check the [pricing page](https://azure.microsoft.com/pricing/details/storage/) for more details. If user no longer intends to use the VHD(s), delete it/them to avoid future charges. 
 
 ## Unable to delete storage account 
 

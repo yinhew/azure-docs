@@ -1,21 +1,12 @@
 ---
-title: Get Started with authentication for Mobile Apps in Xamarin Forms app | Microsoft Docs
-description: Learn how to use Mobile Apps to authenticate users of your Xamarin Forms app through a variety of identity providers, including AAD, Google, Facebook, Twitter, and Microsoft.
-services: app-service\mobile
-documentationcenter: xamarin
-author: panarasi
-manager: crdun
-editor: ''
+title: Get Started with authentication in Xamarin Forms app
+description: Learn how to use Mobile Apps to authenticate users of your Xamarin Forms app with identity providers like AAD, Google, Facebook, Twitter, and Microsoft.
 
 ms.assetid: 9c55e192-c761-4ff2-8d88-72260e9f6179
-ms.service: app-service-mobile
-ms.workload: mobile
 ms.tgt_pltfrm: mobile-xamarin
 ms.devlang: dotnet
 ms.topic: article
-ms.date: 09/24/2018
-ms.author: panarasi
-
+ms.date: 06/25/2019
 ---
 # Add authentication to your Xamarin Forms app
 [!INCLUDE [app-service-mobile-selector-get-started-users](../../includes/app-service-mobile-selector-get-started-users.md)]
@@ -245,8 +236,9 @@ This section shows how to implement the **IAuthenticate** interface in the iOS a
             }
 
             // Display the success or failure message.
-            UIAlertView avAlert = new UIAlertView("Sign-in result", message, null, "OK", null);
-            avAlert.Show();
+            UIAlertController avAlert = UIAlertController.Create("Sign-in result", message, UIAlertControllerStyle.Alert);
+            avAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(avAlert, true, null);
 
             return success;
         }
@@ -343,7 +335,7 @@ Universal Windows Platform (UWP) projects, but using the **UWP** project (with n
             if (args.Kind == ActivationKind.Protocol)
             {
                 ProtocolActivatedEventArgs protocolArgs = args as ProtocolActivatedEventArgs;
-                TodoItemManager.DefaultManager.CurrentClient.ResumeWithURL(protocolArgs.Uri);
+                MobileServiceClientExtensions.ResumeWithURL(TodoItemManager.DefaultManager.CurrentClient,protocolArgs.Uri);
             }
        }
 

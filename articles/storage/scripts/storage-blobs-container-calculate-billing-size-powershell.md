@@ -2,16 +2,10 @@
 title: Azure PowerShell script sample - Calculate the total billing size of a blob container | Microsoft Docs
 description: Calculate the total size of a container in Azure Blob storage for billing purposes.
 services: storage
-documentationcenter: na
 author: fhryo-msft
-manager: cbrooks
-editor: tysonn
 
-ms.assetid:
-ms.custom: mvc
 ms.service: storage
-ms.workload: storage
-ms.tgt_pltfrm: na
+ms.subservice: blobs
 ms.devlang: powershell
 ms.topic: sample
 ms.date: 11/07/2017
@@ -39,11 +33,11 @@ The following sections describes how the storage capacity is calculated for blob
 
 The following calculation describes how to estimate the amount of storage that's consumed per blob container:
 
-`
+```
 48 bytes + Len(ContainerName) * 2 bytes +
 For-Each Metadata[3 bytes + Len(MetadataName) + Len(Value)] +
 For-Each Signed Identifier[512 bytes]
-`
+```
 
 Following is the breakdown:
 * 48 bytes of overhead for each container includes the Last Modified Time, Permissions, Public Settings, and some system metadata.
@@ -60,22 +54,22 @@ The following calculations show how to estimate the amount of storage consumed p
 
 * Block blob (base blob or snapshot):
 
-   `
+   ```
    124 bytes + Len(BlobName) * 2 bytes +
    For-Each Metadata[3 bytes + Len(MetadataName) + Len(Value)] +
    8 bytes + number of committed and uncommitted blocks * Block ID Size in bytes +
    SizeInBytes(data in unique committed data blocks stored) +
    SizeInBytes(data in uncommitted data blocks)
-   `
+   ```
 
 * Page blob (base blob or snapshot):
 
-   `
+   ```
    124 bytes + Len(BlobName) * 2 bytes +
    For-Each Metadata[3 bytes + Len(MetadataName) + Len(Value)] +
    number of nonconsecutive page ranges with data * 12 bytes +
    SizeInBytes(data in unique pages stored)
-   `
+   ```
 
 Following is the breakdown:
 

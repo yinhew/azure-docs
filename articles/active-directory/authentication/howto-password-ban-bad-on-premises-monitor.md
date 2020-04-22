@@ -1,22 +1,25 @@
 ---
-title: Monitoring and logging in Azure AD Password Protection - Azure Active Directory
-description: Understand Azure AD Password Protection monitoring and logging
+title: Monitor on-premises Azure AD Password Protection
+description: Learn how to monitor and review logs for Azure AD Password Protection for an on-premises Active Directory Domain Services environment
 
 services: active-directory
 ms.service: active-directory
 ms.subservice: authentication
-ms.topic: conceptual
-ms.date: 02/01/2019
+ms.topic: how-to
+ms.date: 11/21/2019
 
-ms.author: joflore
-author: MicrosoftGuyJFlo
+ms.author: iainfou
+author: iainfoulds
 manager: daveba
 ms.reviewer: jsimmons
+
 ms.collection: M365-identity-device-management
 ---
-# Azure AD Password Protection monitoring and logging
+# Monitor and review logs for on-premises Azure AD Password Protection environments
 
 After the deployment of Azure AD Password Protection, monitoring and reporting are essential tasks. This article goes into detail to help you understand various monitoring techniques, including where each service logs information and how to report on the use of Azure AD Password Protection.
+
+Monitoring and reporting are done either by event log messages or by running PowerShell cmdlets. The DC agent and proxy services both log event log messages. All PowerShell cmdlets described below are only available on the proxy server (see the AzureADPasswordProtection PowerShell module). The DC agent software does not install a PowerShell module.
 
 ## DC agent event logging
 
@@ -75,7 +78,7 @@ When a pair of events is logged together, both events are explicitly associated 
 
 The `Get-AzureADPasswordProtectionSummaryReport` cmdlet may be used to produce a summary view of password validation activity. An example output of this cmdlet is as follows:
 
-```PowerShell
+```powershell
 Get-AzureADPasswordProtectionSummaryReport -DomainController bplrootdc2
 DomainController                : bplrootdc2
 PasswordChangesValidated        : 6677
@@ -88,11 +91,11 @@ PasswordChangeErrors            : 0
 PasswordSetErrors               : 1
 ```
 
-The scope of the cmdlet’s reporting may be influenced using one of the –Forest, -Domain, or –DomainController parameters. Not specifying a parameter implies –Forest.
+The scope of the cmdlet's reporting may be influenced using one of the –Forest, -Domain, or –DomainController parameters. Not specifying a parameter implies –Forest.
 
-The `Get-AzureADPasswordProtectionSummaryReport` cmdlet works by querying the DC agent admin event log, and then counting the total number of events that correspond to each displayed outcome category. The following table contains the mappings between each outcome and its corresponding event id:
+The `Get-AzureADPasswordProtectionSummaryReport` cmdlet works by querying the DC agent admin event log, and then counting the total number of events that correspond to each displayed outcome category. The following table contains the mappings between each outcome and its corresponding event ID:
 
-|Get-AzureADPasswordProtectionSummaryReport property |Corresponding event id|
+|Get-AzureADPasswordProtectionSummaryReport property |Corresponding event ID|
 | :---: | :---: |
 |PasswordChangesValidated |10014|
 |PasswordSetsValidated |10015|
@@ -111,7 +114,7 @@ Note that the `Get-AzureADPasswordProtectionSummaryReport` cmdlet is shipped in 
 > This cmdlet works by opening a PowerShell session to each domain controller. In order to succeed, PowerShell remote session support must be enabled on each domain controller, and the client must have sufficient privileges. For more information on PowerShell remote session requirements, run 'Get-Help about_Remote_Troubleshooting' in a PowerShell window.
 
 > [!NOTE]
-> This cmdlet works by remotely querying each DC agent service’s Admin event log. If the event logs contain large numbers of events, the cmdlet may take a long time to complete. In addition, bulk network queries of large data sets may impact domain controller performance. Therefore, this cmdlet should be used carefully in production environments.
+> This cmdlet works by remotely querying each DC agent service's Admin event log. If the event logs contain large numbers of events, the cmdlet may take a long time to complete. In addition, bulk network queries of large data sets may impact domain controller performance. Therefore, this cmdlet should be used carefully in production environments.
 
 ### Sample event log message for Event ID 10014 (successful password change)
 
@@ -248,7 +251,7 @@ The `Get-AzureADPasswordProtectionDCAgent` cmdlet may be used to display basic i
 
 An example output of this cmdlet is as follows:
 
-```PowerShell
+```powershell
 Get-AzureADPasswordProtectionDCAgent
 ServerFQDN            : bplChildDC2.bplchild.bplRootDomain.com
 Domain                : bplchild.bplRootDomain.com
@@ -259,11 +262,32 @@ HeartbeatUTC          : 2/16/2018 8:35:02 AM
 
 The various properties are updated by each DC agent service on an approximate hourly basis. The data is still subject to Active Directory replication latency.
 
-The scope of the cmdlet’s query may be influenced using either the –Forest or –Domain parameters.
+The scope of the cmdlet's query may be influenced using either the –Forest or –Domain parameters.
 
 If the HeartbeatUTC value gets stale, this may be a symptom that the Azure AD Password Protection DC Agent on that domain controller is not running, or has been uninstalled, or the machine was demoted and is no longer a domain controller.
 
-If the PasswordPolicyDateUTC value gets stale, this may be a symptom that the Azure AD Password Protection DC Agent on that machine has is not working properly.
+If the PasswordPolicyDateUTC value gets stale, this may be a symptom that the Azure AD Password Protection DC Agent on that machine is not working properly.
+
+## DC agent newer version available
+
+The DC agent service will log a 30034 warning event to the Operational log upon detecting that a newer version of the DC agent software is available, for example:
+
+```text
+An update for Azure AD Password Protection DC Agent is available.
+
+If autoupgrade is enabled, this message may be ignored.
+
+If autoupgrade is disabled, refer to the following link for the latest version available:
+
+https://aka.ms/AzureADPasswordProtectionAgentSoftwareVersions
+
+Current version: 1.2.116.0
+```
+
+The event above does not specify the version of the newer software. You should go to the link in the event message for that information.
+
+> [!NOTE]
+> Despite the references to "autoupgrade" in the above event message, the DC agent software does not currently support this feature.
 
 ## Proxy service event logging
 
@@ -320,7 +344,7 @@ The `Get-AzureADPasswordProtectionProxy` cmdlet may be used to display basic inf
 
 An example output of this cmdlet is as follows:
 
-```PowerShell
+```powershell
 Get-AzureADPasswordProtectionProxy
 ServerFQDN            : bplProxy.bplchild2.bplRootDomain.com
 Domain                : bplchild2.bplRootDomain.com
@@ -330,9 +354,30 @@ HeartbeatUTC          : 12/25/2018 6:35:02 AM
 
 The various properties are updated by each Proxy service on an approximate hourly basis. The data is still subject to Active Directory replication latency.
 
-The scope of the cmdlet’s query may be influenced using either the –Forest or –Domain parameters.
+The scope of the cmdlet's query may be influenced using either the –Forest or –Domain parameters.
 
 If the HeartbeatUTC value gets stale, this may be a symptom that the Azure AD Password Protection Proxy on that machine is not running or has been uninstalled.
+
+## Proxy agent newer version available
+
+The Proxy service will log a 20002 warning event to the Operational log upon detecting that a newer version of the proxy software is available, for example:
+
+```text
+An update for Azure AD Password Protection Proxy is available.
+
+If autoupgrade is enabled, this message may be ignored.
+
+If autoupgrade is disabled, refer to the following link for the latest version available:
+
+https://aka.ms/AzureADPasswordProtectionAgentSoftwareVersions
+
+Current version: 1.2.116.0
+.
+```
+
+The event above does not specify the version of the newer software. You should go to the link in the event message for that information.
+
+This event will be emitted even if the Proxy agent is configured with autoupgrade enabled.
 
 ## Next steps
 

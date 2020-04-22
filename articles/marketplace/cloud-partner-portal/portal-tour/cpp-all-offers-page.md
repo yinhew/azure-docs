@@ -1,20 +1,12 @@
 ---
-title: All offers page for Azure Marketplace | Microsoft Docs
-description: .
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+title: All offers page for Azure Marketplace 
+description: Overview of the All offers page in the Cloud Partner Portal for Azure Marketplace.
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 11/12/2018
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # All offers page

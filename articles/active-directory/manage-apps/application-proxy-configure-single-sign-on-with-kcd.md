@@ -3,8 +3,8 @@ title: Single sign-on with Application Proxy | Microsoft Docs
 description: Covers how to provide single sign-on using Azure AD Application Proxy.
 services: active-directory
 documentationcenter: ''
-author: CelesteDG
-manager: mtillman
+author: msmimart
+manager: CelesteDG
 
 ms.service: active-directory
 ms.subservice: app-mgmt
@@ -12,8 +12,8 @@ ms.workload: identity
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: conceptual
-ms.date: 05/24/2018
-ms.author: celested
+ms.date: 08/13/2019
+ms.author: mimart
 ms.reviewer: japere
 ms.custom: H1Hack27Feb2017, it-pro
 
@@ -56,30 +56,41 @@ The Active Directory configuration varies, depending on whether your Application
 2. Select the server running the connector.
 3. Right-click and select **Properties** > **Delegation**.
 4. Select **Trust this computer for delegation to specified services only**. 
-5. Under **Services to which this account can present delegated credentials** add the value for the SPN identity of the application server. This enables the Application Proxy Connector to impersonate users in AD against the applications defined in the list.
+5. Select **Use any authentication protocol**.
+6. Under **Services to which this account can present delegated credentials** add the value for the SPN identity of the application server. This enables the Application Proxy Connector to impersonate users in AD against the applications defined in the list.
 
    ![Connector-SVR Properties window screenshot](./media/application-proxy-configure-single-sign-on-with-kcd/Properties.jpg)
 
 #### Connector and application server in different domains
 1. For a list of prerequisites for working with KCD across domains, see [Kerberos Constrained Delegation across domains](https://technet.microsoft.com/library/hh831477.aspx).
-2. Use the `principalsallowedtodelegateto` property on the Connector server to enable the Application Proxy to delegate for the Connector server. The application server is `sharepointserviceaccount` and the delegating server is `connectormachineaccount`. For Windows 2012 R2, use this code as an example:
+2. Use the `principalsallowedtodelegateto` property of the service account (computer or dedicated domain user account) of the web application to enable Kerberos authentication delegation from the Application Proxy (connector). The application server is running in the context of `webserviceaccount` and the delegating server is `connectorcomputeraccount`. Run the commands below on a Domain Controller (running Windows Server 2012 R2 or later) in the domain of `webserviceaccount`. Use flat names (non UPN) for both accounts.
 
-```powershell
-$connector= Get-ADComputer -Identity connectormachineaccount -server dc.connectordomain.com
+   If the `webserviceaccount` is a computer account, use these commands:
 
-Set-ADComputer -Identity sharepointserviceaccount -PrincipalsAllowedToDelegateToAccount $connector
+   ```powershell
+   $connector= Get-ADComputer -Identity connectorcomputeraccount -server dc.connectordomain.com
 
-Get-ADComputer sharepointserviceaccount -Properties PrincipalsAllowedToDelegateToAccount
-```
+   Set-ADComputer -Identity webserviceaccount -PrincipalsAllowedToDelegateToAccount $connector
 
-`sharepointserviceaccount` can be the SPS machine account or a service account under which the SPS app pool is running.
+   Get-ADComputer webserviceaccount -Properties PrincipalsAllowedToDelegateToAccount
+   ```
+
+   If the `webserviceaccount` is a user account, use these commands:
+
+   ```powershell
+   $connector= Get-ADComputer -Identity connectorcomputeraccount -server dc.connectordomain.com
+
+   Set-ADUser -Identity webserviceaccount -PrincipalsAllowedToDelegateToAccount $connector
+
+   Get-ADUser webserviceaccount -Properties PrincipalsAllowedToDelegateToAccount
+   ```
 
 ## Configure single sign-on 
 1. Publish your application according to the instructions described in [Publish applications with Application Proxy](application-proxy-add-on-premises-application.md). Make sure to select **Azure Active Directory** as the **Preauthentication Method**.
 2. After your application appears in the list of enterprise applications, select it and click **Single sign-on**.
 3. Set the single sign-on mode to **Integrated Windows Authentication**.  
 4. Enter the **Internal Application SPN** of the application server. In this example, the SPN for our published application is http/www.contoso.com. This SPN needs to be in the list of services to which the connector can present delegated credentials. 
-5. Choose the **Delegated Login Identity** for the connector to use on behalf of your users. For more information, see [Working with different on-premises and cloud identities](#Working-with-different-on-premises-and-cloud-identities)
+5. Choose the **Delegated Login Identity** for the connector to use on behalf of your users. For more information, see [Working with different on-premises and cloud identities](#working-with-different-on-premises-and-cloud-identities)
 
    ![Advanced Application Configuration](./media/application-proxy-configure-single-sign-on-with-kcd/cwap_auth2.png)  
 
@@ -108,7 +119,7 @@ For more information about Kerberos, see [All you want to know about Kerberos Co
 Non-Windows apps typically user usernames or SAM account names instead of domain email addresses. If that situation applies to your applications, you need to configure the delegated login identity field to connect your cloud identities to your application identities. 
 
 ## Working with different on-premises and cloud identities
-Application Proxy assumes that users have exactly the same identity in the cloud and on-premises. If that's not the case, you can still use KCD for single sign-on. Configure a **Delegated login identity** for each application to specify which identity should be used when performing single sign-on.  
+Application Proxy assumes that users have exactly the same identity in the cloud and on-premises. But in some environments, due to corporate policies or application dependencies, organizations might have to use alternate IDs for sign-in. In such cases, you can still use KCD for single sign-on. Configure a **Delegated login identity** for each application to specify which identity should be used when performing single sign-on.  
 
 This capability allows many organizations that have different on-premises and cloud identities to have SSO from the cloud to on-premises apps without requiring the users to enter different usernames and passwords. This includes organizations that:
 
@@ -145,4 +156,3 @@ But, in some cases, the request is successfully sent to the backend application 
 
 
 For the latest news and updates, check out the [Application Proxy blog](https://blogs.technet.com/b/applicationproxyblog/)
-

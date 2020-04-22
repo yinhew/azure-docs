@@ -1,8 +1,8 @@
 ---
 title: Understand time handling in Azure Stream Analytics
-description: Learn about time handling in Azure Stream Analytics
-author: jasonwhowell
-ms.author: zhongc
+description: Learn how time handling works in Azure Stream Analytics, like how to choose the best start time, how to handle late and early events, and time handling metrics.
+author: mamccrea
+ms.author: mamccrea
 ms.reviewer: mamccrea
 ms.service: stream-analytics
 ms.topic: conceptual
@@ -21,7 +21,7 @@ To better frame the discussion, let's define some background concepts:
 
 - **Processing time**: The time when the event reaches the processing system and is observed. For example, when a toll booth sensor sees the car and the computer system takes a few moments to process the data.
 
-- **Watermark**: An event time marker that indicates all events up to what point has been ingress to the streaming processor. Watermarks let the system indicate clear progress on ingesting the events. By the nature of streams, the incoming event data never stops, so watermarks indicate the progress to a certain point in the stream.
+- **Watermark**: An event time marker that indicates up to what point events have been ingressed to the streaming processor. Watermarks let the system indicate clear progress on ingesting the events. By the nature of streams, the incoming event data never stops, so watermarks indicate the progress to a certain point in the stream.
 
    The watermark concept is important. Watermarks allow Stream Analytics to determine when the system can produce complete, correct, and repeatable results that don’t need to be retracted. The processing can be done in a guaranteed way that's predictable and repeatable. For example, if a recount needs to be done for some error handling condition, watermarks are safe starting and ending points.
 
@@ -91,7 +91,7 @@ You may have noticed another concept called early arrival window, that looks lik
 
 Because Azure Stream Analytics guarantees it always generates complete results, you can only specify **job start time** as the first output time of the job, not the input time. The job start time is required so that the complete window is processed, not just from the middle of the window.
 
-Stream Analytics then derives the starting time from the query specification. However, because input event broker is only indexed by arrival time, the system has to translate the starting event time to arrival time. The system can start processing events from that point in the input event broker. With the early arriving window limit, the translation is straightforward. It’s starting event time minus the 5-minute early arriving window. This calculation also means that the system drops all events that are seen having event time 5 minutes greater than arrival time.
+Stream Analytics then derives the starting time from the query specification. However, because input event broker is only indexed by arrival time, the system has to translate the starting event time to arrival time. The system can start processing events from that point in the input event broker. With the early arriving window limit, the translation is straightforward. It is the starting event time minus the 5-minute early arriving window. This calculation also means that the system drops all events that are seen as having an event time 5 minutes ealier than the arrival time.
 
 This concept is used to ensure the processing is repeatable no matter where you start to output from. Without such a mechanism, it would not be possible to guarantee repeatability, as many other streaming systems claim they do.
 
@@ -203,7 +203,7 @@ In this illustration, the following tolerances are used:
 
    4. When the sixth event (device3) is processed, the arrival time (12:17) and the event time (12:12) is below the watermark level. The event time is adjusted to the water mark level (12:17).
 
-   5. When the ninth event (device3) is processed, the arrival time (12:27) is 6 minutes ahead of the event time (12:21). The late arrival policy is applied. The event time is adjusted (12:22), which is above the watermark (12:21) so no further adjustment is applied.
+   5. When the twelfth event (device3) is processed, the arrival time (12:27) is 6 minutes ahead of the event time (12:21). The late arrival policy is applied. The event time is adjusted (12:22), which is above the watermark (12:21) so no further adjustment is applied.
 
 2. Second illustration of watermark progressing without an early arrival policy:
 

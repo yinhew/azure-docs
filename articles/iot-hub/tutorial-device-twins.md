@@ -1,18 +1,14 @@
 ---
 title: Synchronize device state from Azure IoT Hub | Microsoft Docs
-description: Use device twins to synchronize state between your devices and your IoT hub
+description: Learn how to use device twins to configure your devices from the cloud, and receive status and compliance data from your devices.
 services: iot-hub
-documentationcenter: 
 author: wesmc7777
-manager: philmea
 ms.author: wesmc
 ms.service: iot-hub
 ms.devlang: dotnet
 ms.topic: tutorial
-ms.tgt_pltfrm: na
-ms.workload: na
-ms.date: 01/18/2019
-ms.custom: mvc
+ms.date: 06/21/2019
+ms.custom: [mvc, mqtt]
 #Customer intent: As a developer, I want to be able to configure my devices from the cloud and receive status and compliance data from my devices.
 ---
 
@@ -35,11 +31,11 @@ In this tutorial, you perform the following tasks:
 
 [!INCLUDE [cloud-shell-try-it.md](../../includes/cloud-shell-try-it.md)]
 
-If you don’t have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
+If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
 
 ## Prerequisites
 
-The two sample applications you run in this quickstart are written using Node.js. You need Node.js v4.x.x or later on your development machine.
+The two sample applications you run in this quickstart are written using Node.js. You need Node.js v10.x.x or later on your development machine.
 
 You can download Node.js for multiple platforms from [nodejs.org](https://nodejs.org).
 
@@ -50,6 +46,8 @@ node --version
 ```
 
 Download the sample Node.js project from https://github.com/Azure-Samples/azure-iot-samples-node/archive/master.zip and extract the ZIP archive.
+
+Make sure that port 8883 is open in your firewall. The device sample in this tutorial uses MQTT protocol, which communicates over port 8883. This port may be blocked in some corporate and educational network environments. For more information and ways to work around this issue, see [Connecting to IoT Hub (MQTT)](iot-hub-mqtt-support.md#connecting-to-iot-hub).
 
 ## Set up Azure resources
 
@@ -62,7 +60,7 @@ hubname=tutorial-iot-hub
 location=centralus
 
 # Install the IoT extension if it's not already installed:
-az extension add --name azure-cli-iot-ext
+az extension add --name azure-iot
 
 # Create a resource group:
 az group create --name tutorial-iot-hub-rg --location $location
@@ -71,7 +69,7 @@ az group create --name tutorial-iot-hub-rg --location $location
 az iot hub create --name $hubname --location $location --resource-group tutorial-iot-hub-rg --sku F1
 
 # Make a note of the service connection string, you need it later:
-az iot hub show-connection-string --name $hubname -o table
+az iot hub show-connection-string --name $hubname --policy-name service -o table
 
 ```
 

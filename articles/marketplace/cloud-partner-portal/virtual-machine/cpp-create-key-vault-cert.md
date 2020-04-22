@@ -1,32 +1,30 @@
 ---
-title: Create an Azure Key Vault certificate | Microsoft Docs
+title: Create an Azure Key Vault certificate | Azure Marketplace
 description: Explains how to register a VM from an Azure-deployed VHD.
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
-ms.topic: article
+ms.subservice: partnercenter-marketplace-publisher
+ms.topic: conceptual
 ms.date: 11/29/2018
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # Create certificates for Azure Key Vault
 
+> [!IMPORTANT]
+> Starting April 13, 2020, we'll begin moving the management of your Azure Virtual Machine offers to Partner Center. After the migration, you'll create and manage your offers in Partner Center. Follow the instructions in [Azure VM image certification](https://aks.ms/CertifyVMimage) to manage your migrated offers.
+
 This article explains how to provision the self-signed certificates required to establish a Windows Remote Management (WinRM) connectivity to an Azure-hosted virtual machine (VM). This process consists of three steps:
 
-1.	Create the security certificate. 
-2.	Create the Azure Key Vault to store this certificate. 
-3.	Store the certificates to this key vault. 
+1.    Create the security certificate. 
+2.    Create the Azure Key Vault to store this certificate. 
+3.    Store the certificates to this key vault. 
 
 You can use either a new or an existing Azure resource group for this work.  The former approach is used in the following explanation.
 
+
+
+[!INCLUDE [updated-for-az](../../../../includes/updated-for-az.md)]
 
 ## Create the certificate
 
@@ -126,7 +124,7 @@ Copy the contents of the [key vault deployment template](./cpp-key-vault-deploy-
         $id = $accountSelected.Id
                               
         Write-Host "User $id Selected"
-        $myobjectId=(Get-AzureRmADUser -Mail $id)[0].Id
+        $myobjectId=(Get-AzADUser -Mail $id)[0].Id
       }
       catch
       {
@@ -177,9 +175,9 @@ Copy the contents of the [key vault deployment template](./cpp-key-vault-deploy-
      Write-Host "-----------------------------------" 
     
     # Create key vault and configure access
-    New-AzureRmResourceGroupDeployment -Name "kvdeploy$postfix" -ResourceGroupName $rgName -TemplateFile $kvTemplateJson -keyVaultName $kvname -tenantId $mytenantId -objectId $myobjectId
+    New-AzResourceGroupDeployment -Name "kvdeploy$postfix" -ResourceGroupName $rgName -TemplateFile $kvTemplateJson -keyVaultName $kvname -tenantId $mytenantId -objectId $myobjectId
     
-    Set-AzureRmKeyVaultAccessPolicy -VaultName $kvname -ObjectId $myobjectId -PermissionsToKeys all -PermissionsToSecrets all 
+    Set-AzKeyVaultAccessPolicy -VaultName $kvname -ObjectId $myobjectId -PermissionsToKeys all -PermissionsToSecrets all 
         
 ```
 
@@ -201,11 +199,11 @@ You can now store the certificates, contained in the .pfx file, to the new key v
     "dataType" :"pfx",
     "password": "$certpassword"
     }
-    "@
+"@
             echo $certpassword
             $jsonObjectBytes = [System.Text.Encoding]::UTF8.GetBytes($jsonObject)
             $jsonEncoded = [System.Convert]::ToBase64String($jsonObjectBytes)
-            $secret = ConvertTo-SecureString -String $jsonEncoded -AsPlainText –Force
+            $secret = ConvertTo-SecureString -String $jsonEncoded -AsPlainText -Force
             $objAzureKeyVaultSecret=Set-AzureKeyVaultSecret -VaultName $kvname -Name "ISVSecret$postfix" -SecretValue $secret
             echo $objAzureKeyVaultSecret.Id 
     

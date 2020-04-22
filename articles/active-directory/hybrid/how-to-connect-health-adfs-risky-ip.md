@@ -7,6 +7,7 @@ ms.reviewer: zhiweiwangmsft
 author: billmath
 manager: daveba
 ms.service: active-directory
+ms.subservice: hybrid
 ms.workload: identity
 ms.tgt_pltfrm: na
 ms.devlang: na
@@ -33,7 +34,7 @@ Additionally, it is possible for a single IP address to attempt multiple logins 
 > 
 
 ## What is in the report?
-Each item in the Risky IP report shows aggregated information about failed AD FS sign-in activities which exceed designated threshold. It provides the following information:
+The failed sign in activity client IP addresses are aggregated through Web Application Proxy servers. Each item in the Risky IP report shows aggregated information about failed AD FS sign-in activities which exceed designated threshold. It provides the following information:
 ![Azure AD Connect Health Portal](./media/how-to-connect-health-adfs/report4a.png)
 
 | Report Item | Description |

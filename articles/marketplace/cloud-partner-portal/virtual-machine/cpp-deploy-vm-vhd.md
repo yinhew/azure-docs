@@ -1,23 +1,18 @@
 ---
-title: Deploy a VM from your VHDs for the Azure Marketplace | Microsoft Docs
+title: Deploy a VM from your VHDs for the Azure Marketplace 
 description: Explains how to register a VM from an Azure-deployed VHD.
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+author: qianw211
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
-ms.topic: article
-ms.date: 11/30/2018
-ms.author: pbutlerm
+ms.subservice: partnercenter-marketplace-publisher
+ms.topic: conceptual
+ms.date: 08/08/2019
+ms.author: dsindona
 ---
 
 # Deploy a VM from your VHDs
+
+> [!IMPORTANT]
+> Starting April 13, 2020, we'll begin the moving management of your Azure Virtual Machine offers to Partner Center. After the migration, you'll create and manage your offers in Partner Center. Follow the instructions in [Create your Azure Virtual Machine technical assets](https://aka.ms/AzureVMTechAsset) to manage your migrated offers.
 
 This section explains how to deploy a virtual machine (VM) from an Azure-deployed virtual hard disk (VHD).  It lists the tools required, and how to use them to create a user VM image, then deploy it to Azure using PowerShell scripts.
 
@@ -28,13 +23,14 @@ To learn more about VM images, see the following blog posts:
 - [VM Image](https://azure.microsoft.com/blog/vm-image-blog-post/)
 - [VM Image PowerShell 'How To'](https://azure.microsoft.com/blog/vm-image-powershell-how-to-blog-post/)
 
+[!INCLUDE [updated-for-az](../../../../includes/updated-for-az.md)]
 
 ## Prerequisite: install the necessary tools
 
 If you have not already done so, install Azure PowerShell and the Azure CLI, using the following instructions:
 
-- [Install Azure PowerShell on Windows with PowerShellGet](https://docs.microsoft.com/powershell/azure/azurerm/install-azurerm-ps)
-- [Install Azure CLI 2.0](https://docs.microsoft.com/cli/azure/install-azure-cli)
+- [Install Azure PowerShell](https://docs.microsoft.com/powershell/azure/install-Az-ps)
+- [Install Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)
 
 
 ## Deployment steps
@@ -61,7 +57,7 @@ After your VM is deployed, you are ready to [certify your VM image](./cpp-certif
    |  -------------              |   ---------------                                                            |
    | User Storage Account Name   | Storage account name where the generalized VHD is located                    |
    | User Storage Container Name | Container name where the generalized VHD is located                          |
-   | DNS Name for Public IP      | Public IP DNS name                                                           |
+   | DNS Name for Public IP      | Public IP DNS name. The DNS Name is of the VM, you will define this in the Azure Portal, once the offer is deployed.  |
    | Admin User Name             | Administrator account's username for new VM                                  |
    | Admin Password              | Administrator account's password for new VM                                  |
    | OS Type                     | VM operating system: `Windows` \| `Linux`                                    |

@@ -1,20 +1,12 @@
 ---
-title: Update Marketplace Offers - Azure Marketplace | Microsoft Docs
+title: Update marketplace offers | Azure Marketplace 
 description: Update offers on the Azure and AppSource Marketplaces using the Cloud Partner Portal
-services: Azure, AppSource, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 01/11/2019
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # Update Azure Marketplace and AppSource offers

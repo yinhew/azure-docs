@@ -1,21 +1,12 @@
 ---
-title: Azure PowerShell Samples - Zone-redundant scale set | Microsoft Docs
-description: Azure PowerShell Samples
-services: virtual-machine-scale-sets
-documentationcenter: ''
-author: cynthn
-manager: jeconnoc
-editor: ''
+title: Azure PowerShell Samples - Zone-redundant scale set
+description: This script creates a virtual machine scale set running Windows Server 2016 across multiple Availability Zones.
+author: ju-shim
 tags: azure-resource-manager
-
-ms.assetid:
 ms.service: virtual-machine-scale-sets
-ms.devlang: na
 ms.topic: sample
-ms.tgt_pltfrm: na
-ms.workload: na
 ms.date: 04/05/2018
-ms.author: cynthn
+ms.author: jushiman
 ms.custom: mvc
 
 ---
@@ -25,7 +16,7 @@ This script creates a virtual machine scale set running Windows Server 2016 acro
 
 [!INCLUDE [quickstarts-free-trial-note](../../../includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [updated-for-az-vm.md](../../../includes/updated-for-az-vm.md)]
+[!INCLUDE [updated-for-az.md](../../../includes/updated-for-az.md)]
 
 ## Sample script
 

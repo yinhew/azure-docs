@@ -1,5 +1,5 @@
-- name: StorSimple Documentation
-  href: index.md
+- name: StorSimple documentation
+  href: index.yml
 - name: StorSimple Virtual Array
   items:
   - name: Overview
@@ -87,14 +87,16 @@
       href: storsimple-ova-web-ui-admin.md
   - name: Release notes
     items:
-    - name: Update 1.1 - current
+    - name: Update 1.2 - current
+      href: storsimple-virtual-array-update-12-release-notes.md
+    - name: Update 1.1 
       href: storsimple-virtual-array-update-11-release-notes.md
     - name: Update 1
       href: storsimple-virtual-array-update-1-release-notes.md
-    - name: Update 0.6
-      href: storsimple-virtual-array-update-06-release-notes.md
     - name: Archive
       items:
+      - name: Update 0.6
+        href: storsimple-virtual-array-update-06-release-notes.md
       - name: Update 0.5
         href: storsimple-virtual-array-update-05-release-notes.md
       - name: Update 0.4
@@ -103,7 +105,7 @@
         href: storsimple-ova-update-03-release-notes.md
       - name: Update 0.2 and 0.1
         href: storsimple-ova-update-01-release-notes.md
-- name: StorSimple 8000 Series (Azure portal)
+- name: StorSimple 8000 Series
   items:
   - name: Overview
     items:
@@ -314,6 +316,8 @@
       items:
       - name: Subscriptions and storage accounts
         href: storsimple-8000-migrate-classic-azure-portal.md
+      - name: From 8000 series devices
+        href: storsimple-8000-migration-from-8000-options.md
       - name: From 5000/7000 series devices
         href: storsimple-8000-migration-options.md
         items:
@@ -325,13 +329,17 @@
         href: https://download.microsoft.com/download/9/4/A/94AB8165-CCC4-430B-801B-9FD40C8DA340/Migrating Data to StorSimple Volumes_09-02-15.pdf
     - name: Update
       items:
-      - name: Install Update 5 - current
+      - name: Install Update 5.1 - current
+        href: storsimple-8000-install-update-51.md
+      - name: Install Update 5
         href: storsimple-8000-install-update-5.md
       - name: Install Update 4
         href: storsimple-8000-install-update-4.md
   - name: Release notes
     items:
-    - name: Update 5 - current
+    - name: Update 5.1 - current
+      href: storsimple-update51-release-notes.md
+    - name: Update 5
       href: storsimple-update5-release-notes.md
     - name: Update 4
       href: storsimple-update4-release-notes.md
@@ -406,7 +414,7 @@
   - name: Azure Roadmap
     href: https://azure.microsoft.com/roadmap/
   - name: Marketing blog
-    href: http://blogs.technet.com/b/cis/
+    href: https://blogs.technet.com/b/cis/
   - name: Marketing
     href: https://www.microsoft.com/server-cloud/products/storsimple/explore.aspx
   - name: StorSimple Support options

@@ -1,22 +1,13 @@
 ---
-title: Transforming Examples for Test Drive | Microsoft Docs
+title: Transforming Examples for Test Drive | Azure Marketplace
 description: List of examples in how to implement Test Drive.
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: pbutlerm
-manager: Ricardo.Villalobos  
-editor:
-
-ms.assetid: 
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 09/13/2018
-ms.author: pbutlerm
+ms.author: dsindona
 ---
-
 
 Transforming Examples for Test Drive
 ====================================

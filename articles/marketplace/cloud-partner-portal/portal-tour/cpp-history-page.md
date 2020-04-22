@@ -1,20 +1,12 @@
 ---
-title: Audit history page for Azure Marketplace | Microsoft Docs
-description: .
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+title: Audit history page for Azure Marketplace 
+description: Overview of the Audit history page in Cloud Partner Portal for Azure Marketplace.
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 11/13/2018
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # Audit history page

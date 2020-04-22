@@ -1,23 +1,18 @@
 ---
-title: Create Azure IoT Edge module technical assets | Microsoft Docs
+title: Create Azure IoT Edge module technical assets | Azure Marketplace
 description: Create the technical assets for an IoT Edge module.
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: dan-wesley
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
-ms.date: 10/18/2018
-ms.author: pbutlerm
+ms.date: 04/06/2020
+ms.author: dsindona
 ---
 
 # Prepare your IoT Edge module technical assets
+
+>[!Important]
+>Starting April 13, 2020, we'll begin moving management of your IoT Edge module offers to Partner Center. After the migration, you'll create and manage your offers in Partner Center. Follow the instructions in [Create an IoT Edge module offer](https://aka.ms/AzureIoTTechAsset) to manage your migrated offers.
 
 This article describes the requirements that your IoT Edge module technical assets need to meet before being published on Azure Marketplace.
 

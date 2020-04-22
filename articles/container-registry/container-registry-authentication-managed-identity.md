@@ -1,13 +1,8 @@
 ---
-title: Azure Container Registry authentication with a managed identity
+title: Authenticate with managed identity
 description: Provide access to images in your private container registry by using a user-assigned or system-assigned managed Azure identity.
-services: container-registry
-author: dlepow
-
-ms.service: container-registry
 ms.topic: article
 ms.date: 01/16/2019
-ms.author: danlep
 ---
 
 # Use an Azure managed identity to authenticate to an Azure container registry 
@@ -160,7 +155,7 @@ az role assignment create --assignee $spID --scope $resourceID --role acrpull
 
 SSH into the Docker virtual machine that's configured with the identity. Run the following Azure CLI commands, using the Azure CLI installed on the VM.
 
-First, authenticate to the Azure CLI with [az login][az-login], using the identity you configured on the VM. For <userID>, substitute the ID of the identity you retrieved in a previous step. 
+First, authenticate to the Azure CLI with [az login][az-login], using the identity you configured on the VM. For `<userID>`, substitute the ID of the identity you retrieved in a previous step. 
 
 ```azurecli
 az login --identity --username <userID>

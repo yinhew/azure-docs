@@ -1,24 +1,18 @@
 ---
-title: Common issues during VHD creation (FAQ) for the Azure Marketplace | Microsoft Docs
+title: Common issues during VHD creation (FAQ) for the Azure Marketplace 
 description: Frequently asked questions about VHD creation and associated issues.
-services: Azure Marketplace
-documentationcenter: ''
-author: HannibalSII
-manager: Patrick.Butler
-editor: 
-
-ms.assetid: e39563d8-8646-4cb7-b078-8b10ac35b494
+author: dsindona
 ms.service: marketplace
-ms.devlang: na
-ms.topic: article
-ms.tgt_pltfrm: Azure
-ms.workload: na
+ms.subservice: partnercenter-marketplace-publisher
+ms.topic: conceptual
 ms.date: 10/02/2018
-ms.author: hascipio; v-divte; v-miclar
-
+ms.author: dsindona
 ---
 
 # Common issues during VHD creation (FAQ)
+
+> [!IMPORTANT]
+> Starting April 13, 2020, we'll begin moving the management of your Azure Virtual Machine offers to Partner Center. After the migration, you'll create and manage your offers in Partner Center. Follow the instructions in [Create VHD FAQs](https://aka.ms/VHDcreationIssues) to manage your migrated offers.
 
 The following frequently asked questions (FAQ) cover common issues encountered during virtual hard disk (VHD) and virtual machine (VM) creation for VM offers. 
 

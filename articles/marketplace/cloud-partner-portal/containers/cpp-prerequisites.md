@@ -1,23 +1,18 @@
 ---
-title: Azure Containers offer prerequisites | Microsoft Docs
+title: Azure Containers offer prerequisites | Azure Marketplace
 description: Prerequisites for publishing an Azure container.
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: v-miclar
-manager: Patrick.Butler  
-editor:
-
-ms.assetid: 
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 03/13/2019
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # Container publishing prerequisites
+
+> [!IMPORTANT]
+> Starting April 13, 2020, we'll begin moving the management of your Azure Container offers to Partner Center. After the migration, you'll create and manage your offers in Partner Center. Follow the instructions in [Create an Azure Container offer](https://aka.ms/CreateContainerOffer) to manage your migrated offers.
 
 This article describes the prerequisites for publishing a container offer on the Azure Marketplace.  If you have not already done so, you should review the [Containers Offer Publishing Guide](../../marketplace-containers.md).
 

@@ -1,16 +1,11 @@
 ---
-# required metadata
-title: Add loops that repeat actions or process arrays - Azure Logic Apps | Microsoft Docs
-description: How to create loops that repeat workflow actions or process arrays in Azure Logic Apps
+title: Add loops to repeat actions
+description: Create loops that repeat workflow actions or process arrays in Azure Logic Apps
 services: logic-apps
-ms.service: logic-apps
 ms.suite: integration
-author: ecfan
-ms.author: estfan
-ms.reviewer: klam, LADocs
-manager: jeconnoc
-ms.date: 01/05/2019
+ms.reviewer: klam, logicappspm
 ms.topic: article
+ms.date: 01/05/2019
 ---
 
 # Create loops that repeat workflow actions or process arrays in Azure Logic Apps
@@ -21,8 +16,8 @@ For limits on the number of array items that "Foreach" loops can process, see
 [Limits and configuration](../logic-apps/logic-apps-limits-and-config.md). 
 
 To repeat actions until a condition gets met or a state changes, 
-you can create an ["Until" loop](#until-loop). Your logic app runs all 
-the actions inside the loop, and then checks the condition or state. 
+you can create an ["Until" loop](#until-loop). Your logic app first runs 
+all the actions inside the loop, and then checks the condition or state. 
 If the condition is met, the loop stops. Otherwise, the loop repeats. 
 For limits on the number of "Until" loops in a logic app run, see 
 [Limits and configuration](../logic-apps/logic-apps-limits-and-config.md). 
@@ -196,9 +191,12 @@ you can use the `Sequential` option by adding the
 
 ## "Until" loop
   
-To repeat actions until a condition gets met or a state changes, 
-put those actions in an "Until" loop. Here are some common 
-scenarios where you can use an "Until" loop:
+To run and repeat actions until a condition gets met or a state changes, 
+put those actions in an "Until" loop. Your logic app first runs any and 
+all actions inside the loop, and then checks the condition or state. 
+If the condition is met, the loop stops. Otherwise, the loop repeats.
+
+Here are some common scenarios where you can use an "Until" loop:
 
 * Call an endpoint until you get the response you want.
 
@@ -295,7 +293,7 @@ then sends an email that confirms the current value.
 
       | Property | Value | Description |
       | -------- | ----- | ----------- | 
-      | **To** | *<email-address\@domain>* | The recipient's email address. For testing, use your own email address. | 
+      | **To** | *\<email-address\@domain>* | The recipient's email address. For testing, use your own email address. | 
       | **Subject** | Current value for "Limit" is **Limit** | Specify the email subject. For this example, make sure that you include the **Limit** variable. | 
       | **Body** | <*email-content*> | Specify the email message content you want to send. For this example, enter whatever text you like. | 
       |||| 

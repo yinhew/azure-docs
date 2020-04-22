@@ -1,20 +1,12 @@
 ---
-title:  Request to publish the application | Microsoft Docs
-description: .
-services: Azure, Marketplace, Cloud Partner Portal, 
-documentationcenter:
-author: pbutlerm
-manager: Ricardo.Villalobos  
-editor:
-
-ms.assetid: 
+title:  Request to publish the application 
+description: App publishing information in the Partner Center marketplace.
+author: dsindona
 ms.service: marketplace
-ms.workload: 
-ms.tgt_pltfrm: 
-ms.devlang: 
+ms.subservice: partnercenter-marketplace-publisher
 ms.topic: conceptual
 ms.date: 09/13/2018
-ms.author: pbutlerm
+ms.author: dsindona
 ---
 
 # Request to publish the app

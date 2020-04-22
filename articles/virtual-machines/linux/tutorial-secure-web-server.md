@@ -1,16 +1,15 @@
 ---
-title: Tutorial - Secure a Linux web server with SSL certificates in Azure | Microsoft Docs
+title: "Tutorial: Secure a Linux web server with TLS/SSL certificates in Azure"
 description: In this tutorial, you learn how to use the Azure CLI to secure a Linux virtual machine that runs the NGINX web server with SSL certificates stored in Azure Key Vault.
 services: virtual-machines-linux
 documentationcenter: virtual-machines
 author: cynthn
-manager: jeconnoc
-editor: tysonn
+manager: gwallace
+
 tags: azure-resource-manager
 
 ms.assetid: 
 ms.service: virtual-machines-linux
-ms.devlang: na
 ms.topic: tutorial
 ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
@@ -18,19 +17,19 @@ ms.date: 04/30/2018
 ms.author: cynthn
 ms.custom: mvc
 
-#Customer intent: As an IT administrator or developer, I want to learn how to secure a web server with SSL certificates so that I can protect my customer data on web applications that I build and run.
+#Customer intent: As an IT administrator or developer, I want to learn how to secure a web server with TLS/SSL certificates so that I can protect my customer data on web applications that I build and run.
 ---
 
-# Tutorial: Secure a web server on a Linux virtual machine in Azure with SSL certificates stored in Key Vault
-To secure web servers, a Secure Sockets Layer (SSL) certificate can be used to encrypt web traffic. These SSL certificates can be stored in Azure Key Vault, and allow secure deployments of certificates to Linux virtual machines (VMs) in Azure. In this tutorial you learn how to:
+# Tutorial: Secure a web server on a Linux virtual machine in Azure with TLS/SSL certificates stored in Key Vault
+To secure web servers, a Transport Layer Security (TLS), previously known as Secure Sockets Layer (SSL), certificate can be used to encrypt web traffic. These TLS/SSL certificates can be stored in Azure Key Vault, and allow secure deployments of certificates to Linux virtual machines (VMs) in Azure. In this tutorial you learn how to:
 
 > [!div class="checklist"]
 > * Create an Azure Key Vault
 > * Generate or upload a certificate to the Key Vault
 > * Create a VM and install the NGINX web server
-> * Inject the certificate into the VM and configure NGINX with an SSL binding
+> * Inject the certificate into the VM and configure NGINX with a TLS binding
 
-[!INCLUDE [cloud-shell-try-it.md](../../../includes/cloud-shell-try-it.md)]
+This tutorial uses the CLI within the [Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/overview), which is constantly updated to the latest version. To open the Cloud Shell, select **Try it** from the top of any code block.
 
 If you choose to install and use the CLI locally, this tutorial requires that you are running the Azure CLI version 2.0.30 or later. Run `az --version` to find the version. If you need to install or upgrade, see [Install Azure CLI]( /cli/azure/install-azure-cli).
 
@@ -48,7 +47,7 @@ Before you can create a Key Vault and certificates, create a resource group with
 az group create --name myResourceGroupSecureWeb --location eastus
 ```
 
-Next, create a Key Vault with [az keyvault create](/cli/azure/keyvault) and enable it for use when you deploy a VM. Each Key Vault requires a unique name, and should be all lowercase. Replace *<mykeyvault>* in the following example with your own unique Key Vault name:
+Next, create a Key Vault with [az keyvault create](/cli/azure/keyvault) and enable it for use when you deploy a VM. Each Key Vault requires a unique name, and should be all lowercase. Replace *\<mykeyvault>* in the following example with your own unique Key Vault name:
 
 ```azurecli-interactive 
 keyvault_name=<mykeyvault>
@@ -76,7 +75,7 @@ secret=$(az keyvault secret list-versions \
           --vault-name $keyvault_name \
           --name mycert \
           --query "[?attributes.enabled].id" --output tsv)
-vm_secret=$(az vm secret format --secrets "$secret")
+vm_secret=$(az vm secret format --secrets "$secret" -g myResourceGroupSecureWeb --keyvault $keyvault_name)
 ```
 
 ### Create a cloud-init config to secure NGINX
@@ -135,7 +134,7 @@ az vm open-port \
 
 
 ### Test the secure web app
-Now you can open a web browser and enter *https://<publicIpAddress>* in the address bar. Provide your own public IP address from the VM create process. Accept the security warning if you used a self-signed certificate:
+Now you can open a web browser and enter *https:\/\/\<publicIpAddress>* in the address bar. Provide your own public IP address from the VM create process. Accept the security warning if you used a self-signed certificate:
 
 ![Accept web browser security warning](./media/tutorial-secure-web-server/browser-warning.png)
 
@@ -146,13 +145,13 @@ Your secured NGINX site is then displayed as in the following example:
 
 ## Next steps
 
-In this tutorial, you secured an NGINX web server with an SSL certificate stored in Azure Key Vault. You learned how to:
+In this tutorial, you secured an NGINX web server with a TLS/SSL certificate stored in Azure Key Vault. You learned how to:
 
 > [!div class="checklist"]
 > * Create an Azure Key Vault
 > * Generate or upload a certificate to the Key Vault
 > * Create a VM and install the NGINX web server
-> * Inject the certificate into the VM and configure NGINX with an SSL binding
+> * Inject the certificate into the VM and configure NGINX with a TLS binding
 
 Follow this link to see pre-built virtual machine script samples.
 

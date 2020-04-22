@@ -37,17 +37,17 @@ The source machine registers with the configuration server when you install the 
     3. Ensure that the folders listed in [Site Recovery folder exclusions from antivirus programs](vmware-azure-set-up-source.md#azure-site-recovery-folder-exclusions-from-antivirus-program) are excluded from the antivirus software.
     4. When network issues are resolved, retry the registration by following the guidelines in [Register the source machine with the configuration server](vmware-azure-troubleshoot-configuration-server.md#register-source-machine-with-configuration-server).
 
-6. If the string **post request: (7) - Couldn't connect to server** isn't found, in the same log file, look for the string **request: (60) - Peer certificate cannot be authenticated with given CA certificates**. This error might occur because the configuration server certificate has expired or the source machine doesn't support TLS 1.0 or later SSL protocols. It also might occur if a firewall blocks SSL communication between the source machine and the configuration server. If the string is found: 
+6. If the string **post request: (7) - Couldn't connect to server** isn't found, in the same log file, look for the string **request: (60) - Peer certificate cannot be authenticated with given CA certificates**. This error might occur because the configuration server certificate has expired or the source machine doesn't support TLS 1.0 or later protocols. It also might occur if a firewall blocks TLS communication between the source machine and the configuration server. If the string is found: 
     1. To resolve, connect to the configuration server IP address by using a web browser on the source machine. Use the URI https:\/\/<configuration server IP address\>:443/. Ensure that the source machine can reach the configuration server through port 443.
     2. Check whether any firewall rules on the source machine need to be added or removed for the source machine to talk to the configuration server. Because of the variety of firewall software that might be in use, we can't list all required firewall configurations. Work with your network admins to unblock any connection issues.
     3. Ensure that the folders listed in [Site Recovery folder exclusions from antivirus programs](vmware-azure-set-up-source.md#azure-site-recovery-folder-exclusions-from-antivirus-program) are excluded from the antivirus software.  
     4. After you resolve the issues, retry the registration by following guidelines in [Register the source machine with the configuration server](vmware-azure-troubleshoot-configuration-server.md#register-source-machine-with-configuration-server).
 
-7. On Linux, if the value of the platform in <INSTALLATION_DIR\>/etc/drscout.conf is corrupted, registration fails. To identify this issue, open the /var/log/ua_install.log file. Search for the string **Aborting configuration as VM_PLATFORM value is either null or it is not VmWare/Azure**. The platform should be set to either **VmWare** or **Azure**. If the drscout.conf file is corrupted, we recommend that you [uninstall the mobility agent](vmware-physical-mobility-service-overview.md#uninstall-the-mobility-service) and then reinstall the mobility agent. If uninstallation fails, complete the following steps:
-    1. Open the Installation_Directory/uninstall.sh file and comment out the call to the **StopServices** function.
-    2. Open the Installation_Directory/Vx/bin/uninstall.sh file and comment out the call to the **stop_services** function.
-    3. Open the Installation_Directory/Fx/uninstall.sh file and comment out the entire section that's trying to stop the Fx service.
-    4. [Uninstall](vmware-physical-mobility-service-overview.md#uninstall-the-mobility-service) the mobility agent. After successful uninstallation, reboot the system, and then try to reinstall the mobility agent.
+7. On Linux, if the value of the platform in <INSTALLATION_DIR\>/etc/drscout.conf is corrupted, registration fails. To identify this issue, open the /var/log/ua_install.log file. Search for the string **Aborting configuration as VM_PLATFORM value is either null or it is not VmWare/Azure**. The platform should be set to either **VmWare** or **Azure**. If the drscout.conf file is corrupted, we recommend that you [uninstall the mobility agent](vmware-physical-manage-mobility-service.md#uninstall-mobility-service) and then reinstall the mobility agent. If uninstallation fails, complete the following steps:
+    a. Open the Installation_Directory/uninstall.sh file and comment out the call to the **StopServices** function.
+    b. Open the Installation_Directory/Vx/bin/uninstall.sh file and comment out the call to the **stop_services** function.
+    c. Open the Installation_Directory/Fx/uninstall.sh file and comment out the entire section that's trying to stop the Fx service.
+    d. [Uninstall](vmware-physical-manage-mobility-service.md#uninstall-mobility-service) the mobility agent. After successful uninstallation, reboot the system, and then try to reinstall the mobility agent.
 
 ## Installation failure: Failed to load accounts
 
@@ -77,9 +77,9 @@ To avoid this error, ensure that the time on your system clock isn't different f
 
 A certificate that's required to authenticate Site Recovery can't be created. Rerun setup after you ensure that you're running setup as a local administrator.
 
-## Failure to activate Windows Licence from Server Standard EVALUATION to Server Standard
+## Failure to activate Windows License from Server Standard EVALUATION to Server Standard
 
-1. As part of Configuration server deployment through OVF, an evaluation license is used, which is valid for 180 days. You need to activate this License before this gets expired. Else, this can result in frequent shutdown of configuration server and thus cause hinderance to replication activities.
+1. As part of Configuration server deployment through OVF, an evaluation license is used, which is valid for 180 days. You need to activate this License before this gets expired. Else, this can result in frequent shutdown of configuration server and thus cause hindrance to replication activities.
 2. If you are unable to activate Windows license, reach out to [Windows support team](https://aka.ms/Windows_Support) to resolve the issue.
 
 ## Register source machine with configuration server
@@ -120,7 +120,7 @@ If you install applications other than the configuration server on the virtual m
 
 The configuration server must be a single purpose server and using it as a shared server is unsupported. 
 
-For more information, see the configuration FAQ in [Deploy a configuration server](vmware-azure-deploy-configuration-server.md#faq). 
+For more information, see the configuration FAQ in [Deploy a configuration server](vmware-azure-deploy-configuration-server.md#faqs). 
 
 ## Remove the stale entries for protected items from the configuration server database 
 
@@ -143,7 +143,7 @@ To remove stale protected machine on the configuration server, use the following
    
     `Syntax: Unregister-ASRComponent.pl -IPAddress <IP_ADDRESS_OF_MACHINE_TO_UNREGISTER> -Component <Source/ PS / MT>`
  
-    If you have a source server entry of "OnPrem-VM01" with an ipaddress of 10.0.0.4 then use the following command instead.
+    If you have a source server entry of "OnPrem-VM01" with an ip-address of 10.0.0.4 then use the following command instead.
  
     `perl Unregister-ASRComponent.pl -IPAddress 10.0.0.4 -Component Source`
  
@@ -183,7 +183,7 @@ To update the configuration server, run the [unified setup](service-updates-how-
 
 ## Azure Active Directory application creation failure
 
-You have insufficient permissions to create an application in Azure Active Directory (AAD) using the [Open Virtualization Application (OVA)](vmware-azure-deploy-configuration-server.md#deployment-of-configuration-server-through-ova-template
+You have insufficient permissions to create an application in Azure Active Directory (AAD) using the [Open Virtualization Application (OVA)](vmware-azure-deploy-configuration-server.md#deploy-a-configuration-server-through-an-ova-template
 ) template.
 
 To resolve the issue, sign in to the Azure portal and do one of the following:
@@ -201,7 +201,7 @@ Typically, this is due to an error with port 443. Use the following steps to unb
 
 To verify that the Master Target Agent can create a TCP session for the Configuration server IP, look for a trace similar to the following in the Master Target agent logs:
 
-TCP <Replace IP with CS IP here>:52739 <Replace IP with CS IP here>:443 SYN_SENT 
+TCP \<Replace IP with CS IP here>:52739 \<Replace IP with CS IP here>:443 SYN_SENT 
 
 TCP    192.168.1.40:52739     192.168.1.40:443      SYN_SENT  // Replace IP with CS IP here
 

@@ -1,6 +1,6 @@
 ---
-title: Azure Service Bus suspend messaging entities | Microsoft Docs
-description: Suspend and reactivate Azure Service Bus message entities.
+title: Azure Service Bus - suspend messaging entities
+description: This article explains how to temporarily suspend and reactivate Azure Service Bus message entities (queues, topics, and subscriptions).
 services: service-bus-messaging
 documentationcenter: ''
 author: axisc
@@ -12,7 +12,7 @@ ms.workload: na
 ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: article
-ms.date: 01/23/2019
+ms.date: 01/24/2020
 ms.author: aschhab
 
 ---
@@ -31,6 +31,8 @@ In the portal, the **Properties** section for the respective entity enables chan
 
 The portal only permits completely disabling queues. You can also disable the send and receive operations separately using the Service Bus [NamespaceManager](/dotnet/api/microsoft.servicebus.namespacemanager) APIs in the .NET Framework SDK, or with an Azure Resource Manager template through Azure CLI or Azure PowerShell.
 
+[!INCLUDE [updated-for-az](../../includes/updated-for-az.md)]
+
 ## Suspension states
 
 The states that can be set for a queue are:
@@ -45,11 +47,11 @@ For subscriptions and topics, only **Active** and **Disabled** can be set.
 The [EntityStatus](/dotnet/api/microsoft.servicebus.messaging.entitystatus) enumeration also defines a set of transitional states that can only be set by the system. The PowerShell command to disable a queue is shown in the following example. The reactivation command is equivalent, setting `Status` to **Active**.
 
 ```powershell
-$q = Get-AzureRmServiceBusQueue -ResourceGroup mygrp -NamespaceName myns -QueueName myqueue
+$q = Get-AzServiceBusQueue -ResourceGroup mygrp -NamespaceName myns -QueueName myqueue
 
 $q.Status = "Disabled"
 
-Set-AzureRmServiceBusQueue -ResourceGroup mygrp -NamespaceName myns -QueueName myqueue -QueueObj $q
+Set-AzServiceBusQueue -ResourceGroup mygrp -NamespaceName myns -QueueName myqueue -QueueObj $q
 ```
 
 ## Next steps

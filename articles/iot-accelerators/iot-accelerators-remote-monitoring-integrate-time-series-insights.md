@@ -1,9 +1,9 @@
 ---
 title: Integrate Time Series Insights with Remote Monitoring - Azure | Microsoft Docs
 description: In this how-to you will learn how to configure Time Series Insights for an existing Remote Monitoring solution that doesn't already include Time Series Insights.
-author: aditidugar
+author: Philmea
 manager: timlt
-ms.author: adugar
+ms.author: philmea
 ms.date: 09/12/2018
 ms.topic: conceptual
 ms.service: iot-accelerators
@@ -231,6 +231,9 @@ Configure the environment of `basic` deployment for the updated microservices.
 1. Navigate to the **ASA manager service** and edit the docker compose file by adding `PCS_TELEMETRY_STORAGE_TYPE`.
 
 1. Restart the docker containers using `sudo ./start.sh` from the VM.
+
+> [!NOTE]
+> The above configuration of environment variables is valid for Remote Monitoring versions before 1.0.2
 
 ### Standard deployments
 

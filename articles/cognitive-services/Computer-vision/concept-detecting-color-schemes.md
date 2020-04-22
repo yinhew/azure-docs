@@ -1,5 +1,5 @@
 ---
-title: Detecting color schemes - Computer Vision
+title: Color scheme detection - Computer Vision
 titleSuffix: Azure Cognitive Services
 description: Concepts related to detecting the color scheme in images using the Computer Vision API.
 services: cognitive-services
@@ -26,7 +26,7 @@ Computer Vision also returns a boolean value indicating whether an image is in b
 
 The following example illustrates the JSON response returned by Computer Vision when detecting the color scheme of the example image. In this case, the example image is not a black and white image, but the dominant foreground and background colors are black, and the dominant colors for the image as a whole are black and white.
 
-![Outdoor Mountain](./Images/mountain_vista.png)
+![Outdoor Mountain at sunset, with a person's silhouette](./Images/mountain_vista.png)
 
 ```json
 {
@@ -74,6 +74,9 @@ The following table shows Computer Vision's black and white evaluation in the sa
 |![A black and white picture of buildings in Manhattan](./Images/bw_buildings.png) | true |
 |![A blue house and the front yard](./Images/house_yard.png) | false |
 
-## Next steps
+## Use the API
 
-Learn concepts about [detecting image types](concept-detecting-image-types.md).
+The color scheme detection feature is part of the [Analyze Image](https://westcentralus.dev.cognitive.microsoft.com/docs/services/5adf991815e1060e6355ad44/operations/56f91f2e778daf14a499e1fa) API. You can call this API through a native SDK or through REST calls. Include `Color` in the **visualFeatures** query parameter. Then, when you get the full JSON response, simply parse the string for the contents of the `"color"` section.
+
+* [Quickstart: Computer Vision .NET SDK](./quickstarts-sdk/client-library.md?pivots=programming-language-csharp)
+* [Quickstart: Analyze an image (REST API)](./quickstarts/csharp-analyze.md)

@@ -14,7 +14,7 @@ ms.tgt_pltfrm: na
 ms.devlang: na
 ms.topic: article
 ms.date: 03/18/2019
-ms.author: juliako
+ms.author: juliako 
 
 ---
 # Publish Media Services content using .NET  
@@ -76,7 +76,7 @@ Build Streaming URLs
 
         // Get a reference to the streaming manifest file from the  
         // collection of files in the asset. 
-        var manifestFile = asset.AssetFiles.Where(f => f.Name.ToLower().
+        var manifestFile = asset.AssetFiles.ToList().Where(f => f.Name.ToLower().
                                     EndsWith(".ism")).
                                     FirstOrDefault();
 
@@ -104,7 +104,7 @@ The outputs:
 
 
 > [!NOTE]
-> You can also stream your content over an SSL connection. To do this approach, make sure your streaming URLs start with HTTPS. Currently, AMS doesn’t support SSL with custom domains.
+> You can also stream your content over a TLS connection. To do this approach, make sure your streaming URLs start with HTTPS. Currently, AMS doesn’t support TLS with custom domains.
 > 
 > 
 

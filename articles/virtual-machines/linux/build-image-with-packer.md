@@ -1,25 +1,19 @@
 ---
-title: How to create Linux Azure VM Images with Packer | Microsoft Docs
+title: Create Linux Azure VM Images with Packer 
 description: Learn how to use Packer to create images of Linux virtual machines in Azure
-services: virtual-machines-linux
-documentationcenter: virtual-machines
 author: cynthn
-manager: jeconnoc
-editor: tysonn
-tags: azure-resource-manager
-
-ms.assetid: 
 ms.service: virtual-machines-linux
-ms.devlang: azurecli
 ms.topic: article
-ms.tgt_pltfrm: vm-linux
 ms.workload: infrastructure
-ms.date: 05/03/2018
+ms.date: 05/07/2019
 ms.author: cynthn
 ---
 
 # How to use Packer to create Linux virtual machine images in Azure
 Each virtual machine (VM) in Azure is created from an image that defines the Linux distribution and OS version. Images can include pre-installed applications and configurations. The Azure Marketplace provides many first and third-party images for most common distributions and application environments, or you can create your own custom images tailored to your needs. This article details how to use the open source tool [Packer](https://www.packer.io/) to define and build custom images in Azure.
+
+> [!NOTE]
+> Azure now has a service, Azure Image Builder (preview), for defining and creating your own custom images. Azure Image Builder is built on Packer, so you can even use your existing Packer shell provisioner scripts with it. To get started with Azure Image Builder, see [Create a Linux VM with Azure Image Builder](image-builder.md).
 
 
 ## Create Azure resource group
@@ -43,7 +37,7 @@ az ad sp create-for-rbac --query "{ client_id: appId, client_secret: password, t
 
 An example of the output from the preceding commands is as follows:
 
-```azurecli
+```output
 {
     "client_id": "f5b6a5cf-fbdf-4a9f-b3b8-3c2cd00225a4",
     "client_secret": "0e760437-bf34-4aad-9f8d-870be799c55d",
@@ -134,7 +128,7 @@ Build the image by specifying your Packer template file as follows:
 
 An example of the output from the preceding commands is as follows:
 
-```bash
+```output
 azure-arm output will be in this color.
 
 ==> azure-arm: Running builder ...
@@ -228,6 +222,4 @@ Now you can open a web browser and enter `http://publicIpAddress` in the address
 
 
 ## Next steps
-In this example, you used Packer to create a VM image with NGINX already installed. You can use this VM image alongside existing deployment workflows, such as to deploy your app to VMs created from the Image with Ansible, Chef, or Puppet.
-
-For additional example Packer templates for other Linux distros, see [this GitHub repo](https://github.com/hashicorp/packer/tree/master/examples/azure).
+You can also use existing Packer provisioner scripts with [Azure Image Builder](image-builder.md).

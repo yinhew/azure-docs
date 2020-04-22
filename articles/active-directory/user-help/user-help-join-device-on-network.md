@@ -1,8 +1,8 @@
 ---
-title: Join your work device to your organization's network - Azure Active Directory | Microsoft Docs
+title: Join your work device to your organization's network - AD
 description: Learn how to join your work device to your organization's network.
 services: active-directory
-author: eross-msft
+author: curtand
 manager: daveba
 
 ms.assetid: 54e1b01b-03ee-4c46-bcf0-e01affc0419d
@@ -11,10 +11,9 @@ ms.subservice: user-help
 ms.workload: identity
 ms.topic: conceptual
 ms.date: 08/03/2018
-ms.author: lizross
+ms.author: curtand
 ms.reviewer: jairoc
 
-ms.collection: M365-identity-device-management
 ---
 # Join your work device to your organization's network
 Join your work-owned Windows 10 device to your organization's network so you can access potentially restricted resources.
@@ -58,7 +57,7 @@ You can make sure that you're joined by looking at your settings.
 
     ![Accounts on the Settings screen](./media/user-help-join-device-on-network/join-device-settings-accounts.png)
 
-2. Select **Access work or school**, and make sure you see text that says something like, **Connected to *<your_organization>* Azure AD**.
+2. Select **Access work or school**, and make sure you see text that says something like, **Connected to *\<your_organization>* Azure AD**.
 
     ![Access work or school screen with connected contoso account](./media/user-help-join-device-on-network/join-device-oobe-verify.png)
 
@@ -103,7 +102,7 @@ You can make sure that you're joined by looking at your settings.
 
     ![Accounts on the Settings screen](./media/user-help-join-device-on-network/join-device-settings-accounts.png)
 
-2. Select **Access work or school**, and make sure you see text that says something like, **Connected to *<your_organization>* Azure AD**.
+2. Select **Access work or school**, and make sure you see text that says something like, **Connected to *\<your_organization>* Azure AD**.
 
     ![Access work or school screen with connected contoso account](./media/user-help-join-device-on-network/join-device-setup-verify.png)
 
@@ -112,3 +111,4 @@ After you join your device to your organization's network, you should be able to
 
 - If your organization wants you to register your personal device, such as your phone, see [Register your personal device on your organization's network](user-help-register-device-on-network.md).
 
+- If your organization is managed using Microsoft Intune and you have questions about enrollment, sign-in, or any other Intune-related issue, see the [Intune user help content](https://docs.microsoft.com/intune-user-help/use-managed-devices-to-get-work-done).
